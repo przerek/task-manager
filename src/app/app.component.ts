@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Task } from './models/task';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'task-manager';
+
+  taskName = '';
+  taskNumber= '';
+
+  tasks: Task[] = [];
+
+  createTask() {
+    const task: Task = {
+      number: this.taskNumber,
+      name: this.taskName,
+
+    };
+    this.tasks.push(task);
+    this.taskName = '';
+    this.taskNumber='';
+  }
+
+
 }

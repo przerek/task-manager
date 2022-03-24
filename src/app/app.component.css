@@ -6,3 +6,22 @@
   border-radius: 4px;
   color: #30383c;
 }
+
+
+/*.chooser{*/
+/*  float:right;*/
+/*  margin-top: -10px;*/
+/*  margin-right: 10px;*/
+
+/*}*/
+div.inline {
+  float:right;
+  margin-top: -5px;
+  margin-right: 10px;
+}
+
+
+.button {
+  margin: 0px;
+
+}

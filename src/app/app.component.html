@@ -1,35 +1,90 @@
 
 <h5>Nowe zgłoszenie</h5>
 <div class="p-grid p-fluid">
-  <div class="p-col-12 p-md-4">
+  <div class="p-col-12 p-md-3">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">Nr.</span>
       <input type="text" pInputText placeholder="Nr jira" [(ngModel)]="taskNumber">
     </div>
   </div>
 
-  <div class="p-col-12 p-md-4" >
+  <div class="p-col-12 p-md-3" >
     <div class="p-inputgroup" >
       <span class="p-inputgroup-addon"><i class="pi pi-align-center"></i></span>
       <input type="text" pInputText placeholder="Nazwa zgłoszenia" [(ngModel)]="taskName">
     </div>
   </div>
 
-  <div class="p-col-12 p-md-4" >
-    <button pButton type="button" label="Dodaj" (click)="createTask()"   [disabled]="taskName === '' || taskNumber === ''" ></button>
+<!--  <div class="field col-12 md:col-3">-->
+<!--    <label for="vertical" style="display: block">Vertical</label>-->
+<!--    <p-inputNumber [(ngModel)]="value19" [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical"-->
+<!--                   decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">-->
+<!--    </p-inputNumber>-->
+<!--  </div>-->
+
+
+<!--  <div class="p-col-12 p-md-3" >-->
+<!--    <p-dropdown [options]="people"  [(ngModel)]="selectedPerson"  [showClear]="true" placeholder="Wybierz osobę" optionLabel="shortName"></p-dropdown>-->
+<!--  </div>-->
+
+
+  <div class="p-col-12 p-md-3" >
+    <button pButton type="button" label="Dodaj" (click)="createTask()"   [disabled]="taskName === '' || taskNumber === '' " ></button>
   </div>
+
 </div>
-
-
-
-
 
 
 <div class="card">
   <h5>Dodane zadania:</h5>
-  <div class="p-grid" *ngFor="let task of tasks; let i = index">
+  <div class="p-grid" *ngFor="let task of tasks; let i = index;">
     <div class="p-col">
-      <div class="box"> {{ i + 1 }} -{{ task.name }}</div>
+      <div class="box"> {{ i + 1 }} -{{ task.name }}
+
+
+
+        <ng-container *ngFor="let person of task.people;">
+          <button pButton pRipple type="button" [label]="person.shortName+' '+person.hours" class="p-button-rounded"></button>
+        </ng-container>
+
+
+
+
+
+        <div class="inline">
+        <p-dropdown  #mySelect [options]="people"   (onChange)="test(mySelect.value)" [showClear]="true" placeholder="Wybierz osobę" optionLabel="shortName"></p-dropdown>
+          <p-inputNumber  mode="decimal" [(ngModel)]="hours" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+          <button pButton type="button" label="Dodaj osobę" class="p-button-success" (click)="addPersonToTask(task)"></button>
+        </div>
+
+
+
+<!--        <div class="inline">-->
+<!--          <p-dropdown  [options]="people"  [(ngModel)]="selectedPerson" [showClear]="true" placeholder="Wybierz osobę" optionLabel="shortName"></p-dropdown>-->
+<!--          <p-inputNumber  mode="decimal" [(ngModel)]="hours" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>-->
+<!--          <button pButton type="button" label="Dodaj osobę" class="p-button-success" (click)="addPersonToTask(task)"></button>-->
+<!--        </div>-->
+
+
+
+
+
+
+
+
+
+        <!--        <div class="inline">-->
+<!--        <p-dropdown  [options]="people"  [(ngModel)]="selectedPerson"  [showClear]="true" placeholder="Wybierz osobę" optionLabel="shortName"></p-dropdown>-->
+<!--          <p-inputNumber  mode="decimal" [(ngModel)]="hours" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>-->
+<!--          <button pButton type="button" label="Dodaj osobę" class="p-button-success" (click)="addPersonToTask(task)"></button>-->
+<!--        </div>-->
+
+
+      </div>
+
+
+
+
     </div>
   </div>
 

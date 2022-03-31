@@ -1,67 +1,60 @@
-
 <h5>Nowe zgłoszenie</h5>
 <div class="p-grid p-fluid">
-  <div class="p-col-12 p-md-4">
+  <div class="p-col-12 p-md-3">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">Nr.</span>
       <input type="text" pInputText placeholder="Nr jira" [(ngModel)]="taskNumber">
     </div>
   </div>
 
-  <div class="p-col-12 p-md-4" >
-    <div class="p-inputgroup" >
+  <div class="p-col-12 p-md-3">
+    <div class="p-inputgroup">
       <span class="p-inputgroup-addon"><i class="pi pi-align-center"></i></span>
       <input type="text" pInputText placeholder="Nazwa zgłoszenia" [(ngModel)]="taskName">
     </div>
   </div>
 
-  <div class="p-col-12 p-md-4" >
-    <button pButton type="button" label="Dodaj" (click)="createTask()"   [disabled]="taskName === '' || taskNumber === ''" ></button>
+  <div class="p-col-12 p-md-3">
+    <button pButton type="button" label="Dodaj" (click)="createTask()"
+            [disabled]="taskName === '' || taskNumber === '' "></button>
   </div>
+
 </div>
-
-
-
-
 
 
 <div class="card">
   <h5>Dodane zadania:</h5>
-  <div class="p-grid" *ngFor="let task of tasks; let i = index">
+  <div class="p-grid" *ngFor="let task of tasks; let i = index;">
     <div class="p-col">
-      <div class="box"> {{ i + 1 }} -{{ task.name }}</div>
+      <div class="box"> {{ i + 1 }} -{{ task.name }}
+
+
+        <ng-container *ngFor="let person of task.people;">
+          <button pButton pRipple type="button" [label]="person.shortName+' '+person.hours" class="p-button-rounded"
+                  [class.p-button-secondary]="!isDev(person)"></button>
+        </ng-container>
+
+
+        <div class="inline">
+          <p-dropdown #person [options]="people" [showClear]="true" placeholder="Wybierz osobę"
+                      optionLabel="shortName"></p-dropdown>
+          <p-inputNumber #hours mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                         [max]="100"></p-inputNumber>
+          <button pButton type="button" label="Dodaj osobę" class="p-button-success"
+                  (click)="addPersonToTask(person.value,hours.value,task)"></button>
+        </div>
+
+
+      </div>
+
+
     </div>
   </div>
-
 
 </div>
 
 
+<div class="footer" >
+Kod źródłowy: https://github.com/przerek/task-manager
+</div>
 
-
-
-
-
-<!--<ul>-->
-<!--  <li *ngFor="let task of tasks; let i = index">-->
-<!--    {{ i + 1 }} - {{ task.name }}-->
-<!--  </li>-->
-<!--</ul>-->
-
-
-
-
-
-
-
-<!--<div class="card">-->
-<!--  <h5>Fixed Width Column</h5>-->
-<!--  <div class="p-grid">-->
-<!--    <div class="p-col-fixed" style="width:100px">-->
-<!--      <div class="box">100px</div>-->
-<!--    </div>-->
-<!--    <div class="p-col">-->
-<!--      <div class="box">auto</div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

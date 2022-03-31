@@ -6,3 +6,23 @@
   border-radius: 4px;
   color: #30383c;
 }
+
+div.inline {
+  float:right;
+  margin-top: -5px;
+  margin-right: 10px;
+}
+
+
+.button {
+  margin: 0px;
+}
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  height: 60px;
+  line-height: 60px;
+}

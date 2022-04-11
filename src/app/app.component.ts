@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Task} from './models/task';
-import {Person} from "./models/person";
+import {Person, role} from "./models/person";
 
 
 @Component({
@@ -16,18 +16,18 @@ export class AppComponent {
 
 
   people: Person[] = [
-    {shortName: 'PIW', hours: 80, isDev: false},
-    {shortName: 'DMA', hours: 80, isDev: false},
-    {shortName: 'YAT', hours: 80, isDev: false},
-    {shortName: 'MAT', hours: 80, isDev: true},
-    {shortName: 'MAP', hours: 80, isDev: true},
-    {shortName: 'PZL', hours: 80, isDev: true},
-    {shortName: 'MBL', hours: 80, isDev: true},
-    {shortName: 'RLI', hours: 80, isDev: true},
-    {shortName: 'EWA', hours: 80, isDev: true},
-    {shortName: 'KAN', hours: 80, isDev: true},
-    {shortName: 'DAD', hours: 80, isDev: true},
-    {shortName: 'PSU', hours: 70, isDev: true},
+    {shortName: 'PIW', hours: 80, isDev: role.tester},
+    {shortName: 'DMA', hours: 80, isDev: role.tester},
+    {shortName: 'YAT', hours: 80, isDev: role.tester},
+    {shortName: 'MAT', hours: 80, isDev: role.developer},
+    {shortName: 'MAP', hours: 80, isDev: role.developer},
+    {shortName: 'PZL', hours: 80, isDev: role.developer},
+    {shortName: 'MBL', hours: 80, isDev: role.developer},
+    {shortName: 'RLI', hours: 80, isDev: role.developer},
+    {shortName: 'EWA', hours: 80, isDev: role.developer},
+    {shortName: 'KAN', hours: 80, isDev: role.developer},
+    {shortName: 'DAD', hours: 80, isDev: role.developer},
+    {shortName: 'PSU', hours: 70, isDev: role.developer},
   ];
 
   createTask() {
@@ -40,18 +40,14 @@ export class AppComponent {
     this.taskName = '';
     this.taskNumber = '';
   }
+  role = role;
 
-
-  isDev(person: Person) {
-    var per = this.people.find(p => p.shortName == person.shortName);
-    return per?.isDev;
-  }
 
   addPersonToTask(person: Person, hours: number, task: Task) {
     const personToInsert: Person = {
       shortName: person.shortName,
       hours: hours,
-      isDev: this.isDev(person)!
+      isDev: person.isDev
     };
 
 
@@ -78,6 +74,19 @@ export class AppComponent {
     })
 
 
+  }
+
+  deletePersonFromTask(person: Person, task: Task){
+    task.people.forEach((element,index)=>{
+      if(element.shortName==person.shortName)
+         task.people.splice(index,1);
+    })
+  }
+
+  getTotal(people: Person[], role: role){
+    var sum=0;
+    people.filter(value =>{if(value.isDev==role){sum+=value.hours;}})
+    return sum;
   }
 
 }

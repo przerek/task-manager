@@ -1,0 +1,50 @@
+div.boxPeople {
+  background-color: #cce4f7;
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-radius: 0px 0px 10px 10px;
+  color: #30383c;
+}
+
+.boxTitle {
+  background-color: #91cb8a;
+  text-align: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-radius: 10px 10px 0px 0px;
+  color: #30383c;
+}
+
+.p-button-rounded{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+
+div.inline {
+  float:right;
+  margin-top: -10px;
+  margin-right: 10px;
+}
+
+div.inlineSum {
+  float:left;
+  margin-left: 20px;
+  margin-top: 0px;
+  margin-right: 10px;
+}
+
+
+.button {
+  margin: 0px;
+}
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  height: 60px;
+  line-height: 60px;
+}

@@ -7,12 +7,19 @@ import {FormsModule} from "@angular/forms";
 import {DropdownModule} from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {InputNumberModule} from "primeng/inputnumber";
+import { SprintsComponent } from './sprints/sprints.component';
+import {AppRoutingModule} from "./app-routing.module";
+import { TaskComponent } from './task/task.component';
+import {MenubarModule} from "primeng/menubar";
+import {MenuModule} from "primeng/menu";
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SprintsComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +28,8 @@ import {InputNumberModule} from "primeng/inputnumber";
     DropdownModule,
     BrowserAnimationsModule,
     InputNumberModule,
+    AppRoutingModule,
+    MenubarModule,
 
 
   ],

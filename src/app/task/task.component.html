@@ -1,0 +1,73 @@
+<h5>Nowe zgłoszenie</h5>
+<div class="p-grid p-fluid">
+  <div class="p-col-12 p-md-3">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Nr.</span>
+      <input type="text" pInputText placeholder="Nr jira" [(ngModel)]="taskNumber">
+    </div>
+  </div>
+
+  <div class="p-col-12 p-md-3">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-align-center"></i></span>
+      <input type="text" pInputText placeholder="Nazwa zgłoszenia" [(ngModel)]="taskName">
+    </div>
+  </div>
+
+  <div class="p-col-12 p-md-3">
+    <button pButton type="button" label="Dodaj" (click)="createTask()"
+            [disabled]="taskName === '' || taskNumber === '' "></button>
+  </div>
+
+</div>
+
+
+<div class="card">
+  <h5>Dodane zadania:</h5>
+  <div class="p-grid" *ngFor="let task of tasks; let i = index;">
+    <div class="p-col">
+
+      <div class="boxTitle">
+        {{ i + 1 }} -{{ task.name }}
+
+        <div class="inline">
+          <p-dropdown #person [options]="people" [showClear]="true" placeholder="Wybierz osobę"
+                      optionLabel="shortName"></p-dropdown>
+          <p-inputNumber #hours mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
+                         [max]="100"></p-inputNumber>
+          <button pButton type="button" label="Dodaj osobę" class="p-button-success" [disabled]="person.value == undefined || hours.value == null "
+                  (click)="addPersonToTask(person.value,hours.value,task)"></button>
+        </div>
+
+      </div>
+
+
+
+      <div class="boxPeople">
+        <ng-template [ngIf]="task.people.length!=0">
+          <div class="inlineSum">
+            <button pButton pRipple type="button" label="{{getTotal(task.people, role.developer)}}"></button>
+            <button pButton pRipple type="button" label="{{getTotal(task.people, role.tester)}}"
+                    class="p-button-secondary"></button>
+          </div>
+        </ng-template>
+        <ng-container *ngFor="let person of task.people;">
+          <button pButton pRipple type="button" [label]="person.shortName+' '+person.hours" class="p-button-rounded"
+                  [class.p-button-secondary]="person.isDev==role.tester"
+                  (click)="deletePersonFromTask(person, task)" ></button>
+        </ng-container>
+
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
+
+<div class="footer" >
+  Kod źródłowy: https://github.com/przerek/task-manager
+</div>
+

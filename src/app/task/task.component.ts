@@ -1,18 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import {Task} from "../models/task";
 import {Person, role} from "../models/person";
+import {DataService} from "../services/data.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent {
+export class TaskComponent implements OnInit{
 
+ // people!: Observable<Person[]>;
+  // ngOnInit(): void {
+  // //  this.people = this.dataService.behaviorSubject.asObservable();
+//}
+
+
+tasks!: Observable<Task[]>;
+
+  constructor(private dataService: DataService) {}
+  ngOnInit(): void {
+    this.tasks = this.dataService.behaviorSubject_tasks.asObservable();
+}
 
   taskName = '';
   taskNumber = '';
-  tasks: Task[] = [];
 
 
   people: Person[] = [
@@ -36,7 +49,7 @@ export class TaskComponent {
       name: this.taskName,
       people: []
     };
-    this.tasks.push(task);
+    this.dataService.addTask(task);
     this.taskName = '';
     this.taskNumber = '';
   }
@@ -44,43 +57,11 @@ export class TaskComponent {
 
 
   addPersonToTask(person: Person, hours: number, task: Task) {
-    const personToInsert: Person = {
-      shortName: person.shortName,
-      hours: hours,
-      isDev: person.isDev
-    };
-
-
-    this.tasks.find(value => {
-      if (value.number == task.number) {
-        if (task.people.length == 0) {
-
-          task.people.push(personToInsert);
-        } else {
-          var per = task.people.find(p => p.shortName == person.shortName);
-
-          if (per == null)
-            task.people.push(personToInsert);
-          else {
-            var pp = task.people.find(p => p.shortName == per?.shortName);
-            pp!.hours = hours;
-          }
-
-        }
-
-
-      }
-
-    })
-
-
+    this.dataService.addPersonToTask(person, hours, task);
   }
 
   deletePersonFromTask(person: Person, task: Task){
-    task.people.forEach((element,index)=>{
-      if(element.shortName==person.shortName)
-        task.people.splice(index,1);
-    })
+    this.dataService.deletePersonFromTask(person, task);
   }
 
   getTotal(people: Person[], role: role){

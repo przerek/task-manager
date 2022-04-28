@@ -5,6 +5,7 @@ import {SprintsComponent} from "./sprints/sprints.component";
 import {TaskComponent} from "./task/task.component";
 
 const routes: Routes = [
+  {path: '', redirectTo: '/task', pathMatch: 'full'},
   {path: 'sprints', component: SprintsComponent},
   {path: 'task', component: TaskComponent},
 ]

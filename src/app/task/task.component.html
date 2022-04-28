@@ -24,7 +24,7 @@
 
 <div class="card">
   <h5>Dodane zadania:</h5>
-  <div class="p-grid" *ngFor="let task of tasks; let i = index;">
+  <div class="p-grid" *ngFor="let task of tasks | async; let i = index;">
     <div class="p-col">
 
       <div class="boxTitle">

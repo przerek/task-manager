@@ -21,7 +21,7 @@ tasks!: Observable<Task[]>;
 
   constructor(private dataService: DataService) {}
   ngOnInit(): void {
-    this.tasks = this.dataService.behaviorSubject_tasks.asObservable();
+    this.tasks$ = this.dataService.get
 }
 
   taskName = '';
@@ -47,7 +47,7 @@ tasks!: Observable<Task[]>;
     const task: Task = {
       number: this.taskNumber,
       name: this.taskName,
-      people: []
+      assignees: []
     };
     this.dataService.addTask(task);
     this.taskName = '';

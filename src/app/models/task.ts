@@ -1,9 +1,9 @@
-import {Person} from "./person";
+import {Assignee} from "./person";
 
 export interface Task {
   number: string;
   name: string;
-  people: Person[];
+  assignees: Assignee[];
 
 
 

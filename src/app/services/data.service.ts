@@ -34,6 +34,10 @@ export class DataService {
 
   }
 
+  getTasks() {
+    return this.dataBaseService.fetchTasks();
+  }
+
   addTask(task: Task) {
     this.dataBaseService.addTask(task);
   }

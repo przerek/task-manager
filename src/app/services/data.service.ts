@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {Person, role} from "../models/person";
+import {Person} from "../models/person";
 import {DataBaseService} from "./data-base.service";
 import {Task} from "../models/task";
 
@@ -18,20 +18,10 @@ export class DataService {
   }
 
   private init(): void{
+  }
 
-    this.dataBaseService.fetchPersons().subscribe(
-      (persons: Person[])=>{
-        this.behaviorSubject.next(persons);
-      }
-    )
-
-    this.dataBaseService.fetchTasks().subscribe(
-      (tasks: Task[])=>{
-        this.behaviorSubject_tasks.next(tasks);
-      }
-    )
-
-
+  fetchPersons(){
+    return this.dataBaseService.fetchPersons();
   }
 
   getTasks() {
@@ -41,8 +31,8 @@ export class DataService {
   addTask(task: Task) {
     this.dataBaseService.addTask(task);
   }
-  addPersonToTask(person: Person, hours: number, task: Task) {
-    this.dataBaseService.addPersonToTask(person, hours, task);
+  changePersonAssigneInTask(person: Person, hours: number, task: Task) {
+    this.dataBaseService.changePersonAssigneInTask(person, hours, task);
   }
 
   deletePersonFromTask(person: Person, task: Task){

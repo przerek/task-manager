@@ -35,8 +35,8 @@
                       optionLabel="shortName"></p-dropdown>
           <p-inputNumber #hours mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0"
                          [max]="100"></p-inputNumber>
-          <button pButton type="button" label="Dodaj osobę" class="p-button-success" [disabled]="person.value == undefined || hours.value == null "
-                  (click)="addPersonToTask(person.value,hours.value,task)"></button>
+          <button pButton type="button" label="Dodaj/edytuj osobę" class="p-button-success" [disabled]="person.value == undefined || hours.value == null "
+                  (click)="changePersonAssigneInTask(person.value,hours.value,task)"></button>
         </div>
 
       </div>
@@ -44,17 +44,17 @@
 
 
       <div class="boxPeople">
-        <ng-template [ngIf]="task.people.length!=0">
+        <ng-template [ngIf]="task.assignees.length!=0">
           <div class="inlineSum">
-            <button pButton pRipple type="button" label="{{getTotal(task.people, role.developer)}}"></button>
-            <button pButton pRipple type="button" label="{{getTotal(task.people, role.tester)}}"
+            <button pButton pRipple type="button" label="{{getTotal(task.assignees, Role.DEVELOPER)}}"></button>
+            <button pButton pRipple type="button" label="{{getTotal(task.assignees, Role.TESTER)}}"
                     class="p-button-secondary"></button>
           </div>
         </ng-template>
-        <ng-container *ngFor="let person of task.people;">
-          <button pButton pRipple type="button" [label]="person.shortName+' '+person.hours" class="p-button-rounded"
-                  [class.p-button-secondary]="person.isDev==role.tester"
-                  (click)="deletePersonFromTask(person, task)" ></button>
+        <ng-container *ngFor="let assignee of task.assignees;">
+          <button pButton pRipple type="button" [label]="assignee.person.shortName+' '+assignee.hours" class="p-button-rounded"
+                  [class.p-button-secondary]="assignee.person.role==Role.TESTER"
+                  (click)="deletePersonFromTask(assignee.person, task)" ></button>
         </ng-container>
 
       </div>

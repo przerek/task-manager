@@ -10,25 +10,25 @@ import {Sprint} from "../models/sprint";
 export class DataBaseService {
 
   private people: Person[] = [
-    {shortName: 'PIW', hours: 80, role: Role.TESTER},
-    {shortName: 'DMA', hours: 80, role: Role.TESTER},
-    {shortName: 'YAT', hours: 80, role: Role.TESTER},
-    {shortName: 'MAT', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'MAP', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'PZL', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'MBL', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'RLI', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'EWA', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'KAN', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'DAD', hours: 80, role: Role.DEVELOPER},
-    {shortName: 'PSU', hours: 70, role: Role.DEVELOPER},
+    {shortName: 'PIW', role: Role.TESTER},
+    {shortName: 'DMA', role: Role.TESTER},
+    {shortName: 'YAT', role: Role.TESTER},
+    {shortName: 'MAT', role: Role.DEVELOPER},
+    {shortName: 'MAP', role: Role.DEVELOPER},
+    {shortName: 'PZL', role: Role.DEVELOPER},
+    {shortName: 'MBL', role: Role.DEVELOPER},
+    {shortName: 'RLI', role: Role.DEVELOPER},
+    {shortName: 'EWA', role: Role.DEVELOPER},
+    {shortName: 'KAN', role: Role.DEVELOPER},
+    {shortName: 'DAD', role: Role.DEVELOPER},
+    {shortName: 'PSU', role: Role.DEVELOPER},
   ];
 
   private sprints: Sprint[] = [];
 
-  fetchPersons(): Observable<Person[]>
+  fetchPersons():Person[]
   {
-    return  of(this.people);
+    return this.people;
   }
 
 
@@ -50,19 +50,26 @@ export class DataBaseService {
   }
 
 
-  addPersonToTask(person: Person, hours: number, task: Task)
+  changePersonAssigneInTask(person: Person, hours: number, task: Task)
   {
       let assignee = task.assignees.find(p => p.person.shortName == person.shortName);
       if ( assignee == null) {
-         task.assignees.push({
-           person,
-           hours
-         });
+          this.addPersonToTask(person, hours, task);
       } else {
-        assignee.hours = hours;
+          this.updatePersonHoursInTask(person, hours, task, assignee);
       }
 
     this.tasks$.next(this.tasks);
+  }
+
+  addPersonToTask(person: Person, hours: number, task: Task){
+    task.assignees.push({
+      person,
+      hours
+    });
+  }
+  updatePersonHoursInTask(person: Person, hours: number, task: Task, assignee: Assignee){
+    assignee.hours = hours;
   }
 
   deletePersonFromTask(person: Person, task: Task){

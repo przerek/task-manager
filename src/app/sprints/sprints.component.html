@@ -1,2 +1,18 @@
-<p>sprints works!</p>
+<h5>Czas sprintu</h5>
 
+
+<div class="field col-12 md:col-4">
+  <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range" [disabledDays]="[0,6]" [inline]="true" [locale]="pl" (onSelect)="countDaysInSprint(); getDatesInSprint()"></p-calendar>
+</div>
+
+Liczba dni w sprincie: {{dni}}<br/>
+
+Daty:
+<div  *ngFor="let date of dateArray ;">
+    {{date | date: 'dd.MM.yyyy'}}
+</div>
+
+<div class="p-col-12 p-md-3">
+  <button pButton type="button" label="Dodaj" (click)="createSprint()"
+></button>
+</div>

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {Person} from "../models/person";
+import {Person, PersonCapacity} from "../models/person";
 import {DataBaseService} from "./data-base.service";
 import {Task} from "../models/task";
+import {Data} from "@angular/router";
+import {Sprint} from "../models/sprint";
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +26,12 @@ export class DataService {
     return this.dataBaseService.fetchPersons();
   }
 
-  getTasks() {
-    return this.dataBaseService.fetchTasks();
+  getTasks(sprint: Sprint) {
+    return this.dataBaseService.fetchTasks(sprint);
   }
 
-  addTask(task: Task) {
-    this.dataBaseService.addTask(task);
+  addTask(task: Task, chosenSprint: Sprint) {
+    this.dataBaseService.addTask(task, chosenSprint);
   }
   changePersonAssigneInTask(person: Person, hours: number, task: Task) {
     this.dataBaseService.changePersonAssigneInTask(person, hours, task);
@@ -37,6 +39,14 @@ export class DataService {
 
   deletePersonFromTask(person: Person, task: Task){
     this.dataBaseService.deletePersonFromTask(person, task);
+  }
+
+  createSprint(dates: Data[], personCapacity: PersonCapacity[] ){
+    this.dataBaseService.createSprint(dates, personCapacity);
+  };
+
+  getSprints(){
+   return this.dataBaseService.getSprints();
   }
 
 }

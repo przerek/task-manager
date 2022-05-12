@@ -3,6 +3,7 @@ import {Task} from "../models/task";
 import {Assignee, Person, Role} from "../models/person";
 import {DataService} from "../services/data.service";
 import {Observable} from "rxjs";
+import {Sprint} from "../models/sprint";
 
 @Component({
   selector: 'app-task',
@@ -18,10 +19,12 @@ export class TaskComponent implements OnInit{
 
 
 tasks!: Observable<Task[]>;
+sprints!: Sprint[];
 
   constructor(private dataService: DataService) {}
   ngOnInit(): void {
-    this.tasks = this.dataService.getTasks();
+    this.tasks = this.dataService.getTasks(this.chosenSprint);
+    this.sprints = this.dataService.getSprints();
 }
 
   taskName = '';
@@ -30,13 +33,16 @@ tasks!: Observable<Task[]>;
 
   people: Person[] = this.dataService.fetchPersons();
 
+  chosenSprint! : Sprint;
+
+
   createTask() {
     const task: Task = {
       number: this.taskNumber,
       name: this.taskName,
       assignees: []
     };
-    this.dataService.addTask(task);
+    this.dataService.addTask(task, this.chosenSprint);
     this.taskName = '';
     this.taskNumber = '';
   }
@@ -57,5 +63,11 @@ tasks!: Observable<Task[]>;
     assignees.filter(value =>{if(value.person.role==role){sum+=value.hours;}})
     return sum;
   }
+
+
+  changeSprint() {
+this.tasks = this.dataService.getTasks(this.chosenSprint);
+  }
+
 
 }

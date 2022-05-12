@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Assignee, Person, Role} from "../models/person";
+import {Assignee, Person, PersonCapacity, Role} from "../models/person";
 import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {Task} from "../models/task";
 import {Sprint} from "../models/sprint";
+import {Data} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -38,15 +39,26 @@ export class DataBaseService {
   private tasks: Task[] = [ ];
   private tasks$ = new BehaviorSubject(this.tasks);
 
-  fetchTasks(): Observable<Task[]>
+  fetchTasks(sprint: Sprint): Observable<Task[]>
   {
-    return  this.tasks$;
+  //  var ddd= this.sprints.find(value => value.name==sprint.name);
+  //  return new BehaviorSubject(ddd.tasks);
+
+  return  this.tasks$;
   }
 
-  addTask(task: Task): Observable<Task[]>
+  addTask(task: Task, chosenSprint: Sprint): Observable<Task[]>
   {
-    this.tasks.push(task);
-    return of(this.tasks);
+
+      // this.sprints.find(value =>
+      //   {if(value.name==chosenSprint.name)
+      //   { // @ts-ignore
+      //     value.tasks.push(task)}}
+      // )
+
+
+   this.tasks.push(task);
+   return of(this.tasks);
   }
 
 
@@ -76,5 +88,17 @@ export class DataBaseService {
     task.assignees = task.assignees.filter(p => p.person.shortName != person.shortName);
   }
 
+
+
+  createSprint(dates: Data[], personCapacities: PersonCapacity[]){
+    this.sprints.push({
+      dates, personCapacities, tasks: [], name: dates[0]['toLocaleDateString']()+" - "+dates[dates.length-1]['toLocaleDateString']()
+    })
+  }
+
   constructor() { }
+
+  getSprints() {
+    return this.sprints;
+  }
 }

@@ -12,6 +12,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { TaskComponent } from './task/task.component';
 import {MenubarModule} from "primeng/menubar";
 import {MenuModule} from "primeng/menu";
+import {CalendarModule} from "primeng/calendar";
 
 
 
@@ -21,18 +22,19 @@ import {MenuModule} from "primeng/menu";
     SprintsComponent,
     TaskComponent
   ],
-  imports: [
-    BrowserModule,
-    ButtonModule,
-    FormsModule,
-    DropdownModule,
-    BrowserAnimationsModule,
-    InputNumberModule,
-    AppRoutingModule,
-    MenubarModule,
+    imports: [
+        BrowserModule,
+        ButtonModule,
+        FormsModule,
+        DropdownModule,
+        BrowserAnimationsModule,
+        InputNumberModule,
+        AppRoutingModule,
+        MenubarModule,
+        CalendarModule,
 
 
-  ],
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

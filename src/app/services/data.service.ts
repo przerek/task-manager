@@ -4,7 +4,7 @@ import {Person, PersonCapacity} from "../models/person";
 import {DataBaseService} from "./data-base.service";
 import {Task} from "../models/task";
 import {Data} from "@angular/router";
-import {Sprint} from "../models/sprint";
+import {Dates, Sprint} from "../models/sprint";
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +41,7 @@ export class DataService {
     this.dataBaseService.deletePersonFromTask(person, task);
   }
 
-  createSprint(dates: Data[], personCapacity: PersonCapacity[] ){
+  createSprint(dates: Dates[], personCapacity: PersonCapacity[] ){
     this.dataBaseService.createSprint(dates, personCapacity);
   };
 

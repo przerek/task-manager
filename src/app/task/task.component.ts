@@ -18,11 +18,14 @@ export class TaskComponent implements OnInit{
 //}
 
 
-tasks!: Observable<Task[]>;
+tasks!: Task[];
 sprints!: Sprint[];
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) {
+    this.sprints = this.dataService.getSprints();
+  }
   ngOnInit(): void {
+    // @ts-ignore
     this.tasks = this.dataService.getTasks(this.chosenSprint);
     this.sprints = this.dataService.getSprints();
 }
@@ -66,6 +69,7 @@ sprints!: Sprint[];
 
 
   changeSprint() {
+    // @ts-ignore
 this.tasks = this.dataService.getTasks(this.chosenSprint);
   }
 

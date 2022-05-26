@@ -10,15 +10,12 @@ import {PersonCapacity} from "../models/person";
 export class SprintsComponent implements OnInit {
   pl: any;
   rangeDates!: Date[];
-  dni: number;
-
-  dateArray: Date[];
+  freeDays!: Date[];
   personCapacity: PersonCapacity[];
 
+  daysInSprint: { date: Date, isWorkDay: boolean }[] = [ ];
 
   constructor(private dataService: DataService) {
-    this.dni = 0;
-    this.dateArray = [];
     this.personCapacity = [];
   }
 
@@ -36,30 +33,46 @@ export class SprintsComponent implements OnInit {
     };
   }
 
-  countDaysInSprint() {
-    var startDate = this.rangeDates[0];
-    var stopDate = this.rangeDates[1]
-
-    if (startDate != null && stopDate != null)
-      if (this.rangeDates != null)
-        this.dni = ((stopDate.getTime() - startDate.getTime()) / 86400000) + 1;
-      else this.dni = 0;
-  }
-
   getDatesInSprint() {
-    var dateArray = [];
     var tempDate = this.rangeDates[0];
     var stopDate = this.rangeDates[1]
 
-    if (tempDate != null && stopDate != null)
+    if (tempDate != null && stopDate != null) {
+      this.daysInSprint = [];
       while (tempDate <= stopDate) {
-        dateArray.push(new Date(tempDate));
+        this.daysInSprint.push({date: new Date(tempDate), isWorkDay: true});
         tempDate = new Date(tempDate.getTime() + 86400000);
       }
-    this.dateArray = dateArray;
+    }
+  }
+
+
+  getFreeDays() {
+    this.daysInSprint.forEach(value => {
+      if (value.date.getDay() == 6 || value.date.getDay() == 0) value.isWorkDay = false;
+    });
+
+    var temp: Date[];
+    temp = [];
+
+    this.daysInSprint.forEach(value => {
+      if (!value.isWorkDay) {
+        temp.push(value.date)
+      }
+    });
+    return temp;
   }
 
   createSprint() {
-    this.dataService.createSprint(this.dateArray, this.personCapacity);
+    this.dataService.createSprint(this.daysInSprint, this.personCapacity);
+  }
+
+  makeDayAsFree() {
+    this.daysInSprint.forEach(value => {
+      this.freeDays.forEach(fd => {
+        if (value.date.getTime() == fd.getTime()) value.isWorkDay = false
+      });
+    })
+
   }
 }

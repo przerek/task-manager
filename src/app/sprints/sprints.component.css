@@ -3,3 +3,11 @@ div.inline {
   margin-top: -10px;
   margin-right: 10px;
 }
+
+::ng-deep  .p-disabled{
+  opacity: 30%;
+}
+
+::ng-deep  .p-datepicker table td > span.p-highlight{
+  background-color: greenyellow;
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Assignee, Person, PersonCapacity, Role} from "../models/person";
 import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {Task} from "../models/task";
-import {Sprint} from "../models/sprint";
+import {Dates, Sprint} from "../models/sprint";
 import {Data} from "@angular/router";
 
 @Injectable({
@@ -35,30 +35,23 @@ export class DataBaseService {
 
 
 
-
-  private tasks: Task[] = [ ];
-  private tasks$ = new BehaviorSubject(this.tasks);
-
-  fetchTasks(sprint: Sprint): Observable<Task[]>
+  fetchTasks(sprint: Sprint)
   {
-  //  var ddd= this.sprints.find(value => value.name==sprint.name);
-  //  return new BehaviorSubject(ddd.tasks);
-
-  return  this.tasks$;
+    if (sprint != undefined) {
+      const ddd = this.sprints.find(value => value.name == sprint.name);
+      return ddd!.tasks;
+    } else return null;
   }
 
-  addTask(task: Task, chosenSprint: Sprint): Observable<Task[]>
+  addTask(task: Task, chosenSprint: Sprint)
   {
 
-      // this.sprints.find(value =>
-      //   {if(value.name==chosenSprint.name)
-      //   { // @ts-ignore
-      //     value.tasks.push(task)}}
-      // )
+      this.sprints.find(value =>
+        {if(value.name==chosenSprint.name)
+        { // @ts-ignore
+          value.tasks.push(task)}}
+      )
 
-
-   this.tasks.push(task);
-   return of(this.tasks);
   }
 
 
@@ -70,8 +63,6 @@ export class DataBaseService {
       } else {
           this.updatePersonHoursInTask(person, hours, task, assignee);
       }
-
-    this.tasks$.next(this.tasks);
   }
 
   addPersonToTask(person: Person, hours: number, task: Task){
@@ -90,9 +81,13 @@ export class DataBaseService {
 
 
 
-  createSprint(dates: Data[], personCapacities: PersonCapacity[]){
+  createSprint(dates: Dates[], personCapacities: PersonCapacity[]){
+
+    var datesArray: Date[];
+    datesArray = [];
+    dates.forEach(value => datesArray.push(value.date));
     this.sprints.push({
-      dates, personCapacities, tasks: [], name: dates[0]['toLocaleDateString']()+" - "+dates[dates.length-1]['toLocaleDateString']()
+      dates, personCapacities, tasks: [], name: datesArray[0]['toLocaleDateString']()+" - "+datesArray[dates.length-1]['toLocaleDateString']()
     })
   }
 

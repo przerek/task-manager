@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Task} from "../models/task";
 import {Assignee, Person, Role} from "../models/person";
 import {DataService} from "../services/data.service";
-import {Observable} from "rxjs";
 import {Sprint} from "../models/sprint";
+import {Store} from "@ngxs/store";
+import {AddTask} from "../store/actions/actions";
 
 @Component({
   selector: 'app-task',
@@ -21,7 +22,8 @@ export class TaskComponent implements OnInit{
 tasks!: Task[];
 sprints!: Sprint[];
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private store: Store) {
+  // private store: Store
     this.sprints = this.dataService.getSprints();
   }
   ngOnInit(): void {
@@ -48,6 +50,9 @@ sprints!: Sprint[];
     this.dataService.addTask(task, this.chosenSprint);
     this.taskName = '';
     this.taskNumber = '';
+
+    this.store.dispatch(new AddTask(task));
+
   }
   Role = Role;
 

@@ -3,7 +3,9 @@ import {Assignee, Person, PersonCapacity, Role} from "../models/person";
 import {BehaviorSubject, Observable, of, Subject} from "rxjs";
 import {Task} from "../models/task";
 import {Dates, Sprint} from "../models/sprint";
-import {Data} from "@angular/router";
+import copy from "fast-copy";
+import {cloneDeep} from "lodash";
+
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +68,15 @@ export class DataBaseService {
   }
 
   addPersonToTask(person: Person, hours: number, task: Task){
+
+    //var taskass = JSON.parse(JSON.stringify(task.assignees));
+
+
+
+
+// task = copy(task);
+    // const taskass = cloneDeep(task.assignees);
+
     task.assignees.push({
       person,
       hours

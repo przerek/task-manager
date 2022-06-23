@@ -11,16 +11,18 @@ import { SprintsComponent } from './sprints/sprints.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { TaskComponent } from './task/task.component';
 import {MenubarModule} from "primeng/menubar";
-import {MenuModule} from "primeng/menu";
 import {CalendarModule} from "primeng/calendar";
-
+import {NgxsModule} from '@ngxs/store';
+import {environment} from "../environments/environment";
+import {AddTaskAction} from "./store/state/state";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SprintsComponent,
-    TaskComponent
+    TaskComponent,
+
   ],
     imports: [
         BrowserModule,
@@ -31,7 +33,7 @@ import {CalendarModule} from "primeng/calendar";
         InputNumberModule,
         AppRoutingModule,
         MenubarModule,
-        CalendarModule,
+        CalendarModule,NgxsModule.forRoot([AddTaskAction], {developmentMode: !environment.production, })
 
 
     ],
